@@ -1,0 +1,44 @@
+//gradle script - this is groovy 
+apply (plugin: 'java')  //klammern können weggelassen werden
+apply plugin: 'war' 
+apply plugin: 'eclipse'  
+
+buildscript {  //lambdas
+    repositories {
+        mavenCentral()
+        }
+    dependencies {
+        classpath 'org.wisepersist:gwt-gradle-plugin:1.0.13'  // https://search.maven.org/
+    }
+}
+
+apply plugin: 'gwt'
+
+sourceCompatibility = '1.8'  //ab java9 -> '9' nicht '1.9'
+
+
+repositories {
+    mavenCentral()
+    }
+dependencies {
+
+['context','beans','webmvc'].each {
+    implementation "org.springframework:spring-$it:5.2.2.RELEASE"//spring transitive abhängigkeiten laden weitere .jars (context läd core)
+}
+
+implementation 'org.hibernate:hibernate-core:5.4.10.Final'  //hibernate
+implementation 'org.springframework.data:spring-data-jpa:2.2.3.RELEASE' //spring data jpa
+
+implementation 'org.postgresql:postgresql:42.2.9' //postgres
+runtime 'com.google.gwt:gwt-servlet:2.8.2' //gwt, nicht zur compilezeit verfügbar
+
+}
+
+gwt {
+    gwtVersion = '2.8.2'
+    modules 'com.trivadis.books.Books'  //welches gwt modul gestartet werden soll
+    maxHeapSize = '4G' //Größe der gestarteten VM
+    eclipse {
+        addGwtContainer = false
+    }
+}

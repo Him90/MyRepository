@@ -1,0 +1,13 @@
+/test-classes/
+/src/main/gwt-unitCache/
+/src/main/webapp/books/
+/src/main/webapp/WEB-INF/classes/
+/.apt_generated/
+/.apt_generated_tests/
+/.settings/
+/.classpath
+/.project
+/.gradle/
+/build/
+/war/
+
