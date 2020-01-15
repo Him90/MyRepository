@@ -1,25 +1,26 @@
-package com.trivadis.books.client;
+package com.trivadis.books.server.Entity;
 
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-public class BookDTO implements Serializable {
+import com.trivadis.books.client.Genre;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2689189179759713643L;
+@Entity
+public class BookEntity {
 	
-
+	@Id
+	@GeneratedValue
 	private Long id;
+	
 	private String bookTitle;
 	private Genre bookGenre;
 	
-	public BookDTO() {
-		this.bookTitle = "default";
-		this.bookGenre = new Genre();
+	public BookEntity() {
+		// TODO Auto-generated constructor stub
 	}
 	
-	public BookDTO(String bookTitle, Genre bookGenre) {
+	public BookEntity(String bookTitle, Genre bookGenre) {
 		this.bookTitle = bookTitle;
 		this.bookGenre = bookGenre;
 	}
@@ -44,5 +45,5 @@ public class BookDTO implements Serializable {
 	
 
 	
-	
+
 }

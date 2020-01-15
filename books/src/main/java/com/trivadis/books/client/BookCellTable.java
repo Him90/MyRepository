@@ -45,14 +45,14 @@ public class BookCellTable extends CellTable<BookDTO>{
 
 			@Override
 			public String getValue(BookDTO book) {
-				return book.getBookGenreTitle();
+				return book.getBookGenre().getGenreTitle();
 			}
 		};
 
 		genreColumn.setSortable(true);
 		addColumn(genreColumn, "Genre");
 
-		listHandler.setComparator(genreColumn, (a, b) -> (a.getBookGenreTitle().compareTo(b.getBookGenreTitle())));
+		listHandler.setComparator(genreColumn, (a, b) -> (a.getBookGenre().getGenreTitle().compareTo(b.getBookGenre().getGenreTitle())));
 	}
 
 	public void updateFromServer(ListDataProvider<BookDTO> bookDataProvider, ServiceAsync service) {

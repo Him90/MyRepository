@@ -8,10 +8,12 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 /**
  * The client-side stub for the RPC service.
  */
-@RemoteServiceRelativePath("greet")
+@RemoteServiceRelativePath("bookStore")
 public interface Service extends RemoteService {
 
 	void addBook(BookDTO book);
 
 	List<BookDTO> getBooks();
+
+	List<Genre> getGenres();
 }

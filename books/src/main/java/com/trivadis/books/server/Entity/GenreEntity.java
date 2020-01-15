@@ -1,23 +1,24 @@
-package com.trivadis.books.client;
+package com.trivadis.books.server.Entity;
 
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-public class Genre implements Serializable{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1757486252146679819L;
+@Entity
+public class GenreEntity {
 	
-
+	@Id
+	@GeneratedValue
 	private Long id;
-	private String genreTitle;
 	
-	public Genre() {
+private String genreTitle;
+	
+	public GenreEntity() {
 		this.genreTitle = "none";
 	}
 	
-	public Genre(String genreTitle) {
+	public GenreEntity(String genreTitle) {
 		this.genreTitle = genreTitle;
 	}
 	
@@ -40,4 +41,5 @@ public class Genre implements Serializable{
 	}
 
 
+	
 }

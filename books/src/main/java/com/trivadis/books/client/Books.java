@@ -99,7 +99,7 @@ public class Books implements EntryPoint {
 						}
 					});
 
-				});
+				},service);
 				dialogUIBinder.center();
 				dialogUIBinder.show();
 
