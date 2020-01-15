@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
@@ -27,13 +28,15 @@ public class BookManagementService {
 	
 	@Autowired
 	private GenreRepository genreRepository;
+	
+
 
 	public void addBook(BookDTO book) {
 
 		BookEntity newBookEntity = new BookEntity();
 		BeanUtils.copyProperties(book, newBookEntity);
-
 		bookRepository.save(newBookEntity);		
+
 	}
 	
 	public void addGenre(String genreTitle) {
@@ -70,7 +73,7 @@ public class BookManagementService {
 
 		for (GenreEntity genreEntity : genreEntityList) {
 			Genre genre = new Genre();
-
+			
 			BeanUtils.copyProperties(genreEntity, genre);
 
 			

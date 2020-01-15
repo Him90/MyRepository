@@ -1,5 +1,6 @@
 package com.trivadis.books.client;
 
+import java.awt.print.Book;
 import java.util.HashSet;
 import java.util.List;
 import java.util.function.Consumer;
@@ -98,6 +99,7 @@ public class AddBookDialog extends DialogBox {
 	}
 	
 	private BookDTO setUserInput() {
+		BookDTO book = new BookDTO();
 		book.setBookGenre(entryBookGenre.getSelectedValue());
 		book.setBookTitle(entryBookTitle.getValue());
 		return book;

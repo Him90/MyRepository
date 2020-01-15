@@ -6,8 +6,12 @@ import com.trivadis.books.client.Service;
 
 import java.util.List;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -19,6 +23,13 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	
 	@Autowired
 	private BookManagementService service;	
+	
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		WebApplicationContextUtils.findWebApplicationContext(config.getServletContext()).getAutowireCapableBeanFactory()
+				.autowireBean(this);
+	}
 
 	@Override
 	public void addBook(BookDTO book) {

@@ -1,5 +1,6 @@
 package com.trivadis.books.server.Entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,7 +13,8 @@ public class GenreEntity {
 	@GeneratedValue
 	private Long id;
 	
-private String genreTitle;
+	@Column(unique =  true)
+	private String genreTitle;
 	
 	public GenreEntity() {
 		this.genreTitle = "none";
