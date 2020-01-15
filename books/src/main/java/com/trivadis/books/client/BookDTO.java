@@ -41,5 +41,12 @@ public class BookDTO implements Serializable {
 		this.bookGenre.setGenreTitle(bookGenre);
 	}
 	
+	public String getBookGenreTitle() {
+		return this.getBookGenre().getGenreTitle();
+	}
+	public void setBookGenreTitle(String genreTitle) {
+		this.getBookGenre().setGenreTitle(genreTitle);;
+	}
+	
 	
 }

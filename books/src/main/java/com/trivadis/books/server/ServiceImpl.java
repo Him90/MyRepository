@@ -13,6 +13,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 @SuppressWarnings("serial")
 public class ServiceImpl extends RemoteServiceServlet implements Service {
+	
+	
 
 	@Override
 	public void addBook(BookDTO book) {
