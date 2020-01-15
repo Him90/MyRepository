@@ -9,6 +9,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.cellview.client.ColumnSortEvent;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -28,18 +29,11 @@ import com.google.gwt.view.client.ListDataProvider;
  */
 public class Books implements EntryPoint {
 	/**
-	 * The message displayed to the user when the server cannot be reached or
-	 * returns an error.
-	 */
-	private static final String SERVER_ERROR = "An error occurred while "
-			+ "attempting to contact the server. Please check your network " + "connection and try again.";
-
-	/**
 	 * Create a remote service proxy to talk to the server-side service.
 	 */
 	private final ServiceAsync service = GWT.create(Service.class);
 	
-	private ListDataProvider<Book> bookDataProvider;
+	private ListDataProvider<BookDTO> bookDataProvider;
 	private BookCellTable bookCellTable;
 
 	/**
@@ -73,7 +67,7 @@ public class Books implements EntryPoint {
 		DockLayoutPanel content = new DockLayoutPanel(Unit.PX);
 		ScrollPanel scrollTable = new ScrollPanel();
 
-		bookDataProvider = new ListDataProvider<Book>();
+		bookDataProvider = new ListDataProvider<BookDTO>();
 		bookCellTable = new BookCellTable(bookDataProvider, service);
 		bookDataProvider.addDataDisplay(bookCellTable);
 
@@ -86,7 +80,31 @@ public class Books implements EntryPoint {
 		
 		panel.add(content);
 		RootLayoutPanel.get().add(panel);
+		
+		buttonAdd.addClickHandler(e -> {
 
+				AddBookDialog dialogUIBinder = new AddBookDialog(book -> {
+
+					service.addBook(book, new AsyncCallback<Void>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+						}
+
+						@Override
+						public void onSuccess(Void result) {
+							bookCellTable.updateFromServer(bookDataProvider, service);
+							ColumnSortEvent.fire(bookCellTable, bookCellTable.getColumnSortList());
+
+						}
+					});
+
+				});
+				dialogUIBinder.center();
+				dialogUIBinder.show();
+
+
+		});
 
 
 }

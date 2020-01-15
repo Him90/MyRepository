@@ -1,7 +1,12 @@
 package com.trivadis.books.client;
 
+import java.util.List;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface ServiceAsync {
-	void greetServer(String input, AsyncCallback<String> callback) throws IllegalArgumentException;
+
+	void addBook(BookDTO book, AsyncCallback<Void> asyncCallback);
+
+	void getBooks(AsyncCallback<List<BookDTO>> asyncCallback);
 }

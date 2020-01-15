@@ -1,0 +1,27 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+
+	.row{margin-bottom:10px;margin-top:10px;margin-right:10px;margin-left:10px;}
+	.button {margin:20px;background-color: blue;color: yellow;display: inline-block;width: 175px; hight: 125px; font-size:20px}
+	.label {color: black;display: inline-block;width: 205px;font-size: 14px} 
+	.box {color:blue;display: inline-block;width: 200px;}
+	
+	</ui:style>
+	<g:HTMLPanel>
+	<div class ="{style.row}">
+		<g:Button styleName="{style.button}" ui:field="buttonAdd" text = "add book"/>
+		<g:Button styleName="{style.button}" ui:field="buttonClose" text = "finished" />
+	</div>
+	<div class ="{style.row}">
+				<span class="{style.label}">Booktitle: </span>
+				<g:TextBox styleName = "{style.box}"  ui:field="entryBookTitle"/>
+	</div>	
+	<div class ="{style.row}">
+				<span class="{style.label}">BookGenre: </span>
+				<g:ListBox styleName = "{style.box}"  ui:field="entryBookGenre"/>
+	</div>
+		
+	</g:HTMLPanel>
+</ui:UiBinder> 
