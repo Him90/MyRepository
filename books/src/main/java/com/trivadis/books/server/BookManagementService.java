@@ -3,14 +3,13 @@ package com.trivadis.books.server;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
-
-import com.google.gwt.core.client.GWT;
 import com.trivadis.books.client.BookDTO;
 import com.trivadis.books.client.Genre;
 import com.trivadis.books.server.Entity.BookEntity;

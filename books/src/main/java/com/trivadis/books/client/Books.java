@@ -1,6 +1,5 @@
 package com.trivadis.books.client;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -11,9 +10,7 @@ import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
-import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.cellview.client.ColumnSortEvent;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -61,7 +58,7 @@ public class Books implements EntryPoint {
 
 		FlowPanel filters = new FlowPanel();
 		InlineLabel filterGenreInfo = new InlineLabel("Select to filter a genre");
-		InlineLabel filterTextInfo = new InlineLabel("Select to filter a genre");
+		InlineLabel filterTextInfo = new InlineLabel("Select to filter bei booktitle");
 
 		listGenreFiltersBox = new ListBox();
 		filterByBookTitle = new TextBox();
@@ -153,27 +150,12 @@ public class Books implements EntryPoint {
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
 				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-					checkForBookTitle();
+					showFilteredResult();
 				}
 
 			}
 		});
 
-	}
-
-	private void checkForBookTitle() {
-
-		List<BookDTO> tempBox = new ArrayList<BookDTO>();
-
-		for (BookDTO book : bookDataProvider.getList()) {
-
-			if (book.getBookTitle().contains(filterByBookTitle.getValue())) {
-				tempBox.add(book);
-			}
-
-		}
-		bookDataProvider.getList().clear();
-		bookDataProvider.getList().addAll(tempBox);
 	}
 
 	private void loadAvailableGenres() {
@@ -218,17 +200,17 @@ public class Books implements EntryPoint {
 
 				for (BookDTO book : result) {
 					if ((book.getBookGenre().getGenreTitle() == listGenreFiltersBox.getSelectedValue())
-							&& ( book.getBookTitle().contains(filterByBookTitle.getValue()))) {
+							&& (book.getBookTitle().contains(filterByBookTitle.getValue()))) {
 
 						bookDataProvider.getList().add(book);
 
 					}
 					if (listGenreFiltersBox.getSelectedValue() == "none"
-							&& ( book.getBookTitle().contains(filterByBookTitle.getValue()))) {
-						//bookDataProvider.getList().clear();
+							&& (book.getBookTitle().contains(filterByBookTitle.getValue()))) {
+						// bookDataProvider.getList().clear();
 						bookDataProvider.getList().add(book);
 
-						//bookDataProvider.getList().addAll(result);
+						// bookDataProvider.getList().addAll(result);
 
 					}
 

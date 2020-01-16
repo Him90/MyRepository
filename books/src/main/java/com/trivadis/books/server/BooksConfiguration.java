@@ -1,6 +1,5 @@
 package com.trivadis.books.server;
 
-
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
@@ -24,13 +23,13 @@ import com.trivadis.books.server.Entity.BookEntity;
 
 @Configuration
 @ComponentScan(basePackageClasses = BooksConfiguration.class)
-@EnableTransactionManagement  // für datenbankanbindung
-@EnableJpaRepositories   // für spring data
+@EnableTransactionManagement 
+@EnableJpaRepositories 
 public class BooksConfiguration {
-	
+
 	@Bean
 	DriverManagerDataSource dataSource() {
-		DriverManagerDataSource dataSource = new DriverManagerDataSource(); 
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setUrl("jdbc:postgresql://localhost:5432/postgres");
 		dataSource.setUsername("postgres");
 		dataSource.setPassword("postgres");
@@ -39,12 +38,11 @@ public class BooksConfiguration {
 		return dataSource;
 	}
 
-	//kann auch in persistency.xml erfolgen
 	@Bean
 	@Autowired
 	LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
 		LocalContainerEntityManagerFactoryBean emfb = new LocalContainerEntityManagerFactoryBean();
-		
+
 		emfb.setDataSource(dataSource);
 		emfb.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 		emfb.setPersistenceUnitName("books");
@@ -56,8 +54,7 @@ public class BooksConfiguration {
 		return emfb;
 
 	}
-	
-	
+
 	@Bean
 	@Autowired
 	PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {

@@ -10,7 +10,6 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -20,10 +19,10 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  */
 @SuppressWarnings("serial")
 public class ServiceImpl extends RemoteServiceServlet implements Service {
-	
+
 	@Autowired
-	private BookManagementService service;	
-	
+	private BookManagementService service;
+
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -34,13 +33,13 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	@Override
 	public void addBook(BookDTO book) {
 		service.addBook(book);
-		
+
 	}
-	
+
 	@Override
 	public List<BookDTO> getBooks() {
 		return service.getBooks();
-		
+
 	}
 
 	@Override
@@ -51,6 +50,6 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	@Override
 	public void deleteBook(BookDTO book) {
 		service.deleteBook(book);
-		
+
 	}
 }
