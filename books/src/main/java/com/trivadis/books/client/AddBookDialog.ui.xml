@@ -7,6 +7,8 @@
 	.button {margin:20px;background-color: blue;color: yellow;display: inline-block;width: 175px; hight: 125px; font-size:20px}
 	.label {color: black;display: inline-block;width: 205px;font-size: 14px} 
 	.box {color:blue;display: inline-block;width: 200px;}
+	.space {color: blue;display: inline-block;width: 205px;}
+	
 	
 	</ui:style>
 	<g:HTMLPanel>
@@ -15,11 +17,15 @@
 		<g:Button styleName="{style.button}" ui:field="buttonClose" text = "finished" />
 	</div>
 	<div class ="{style.row}">
-				<span class="{style.label}">Booktitle: </span>
+				<g:Label styleName = "{style.label}"  ui:text="Book title"/>
 				<g:TextBox styleName = "{style.box}"  ui:field="entryBookTitle"/>
 	</div>	
 	<div class ="{style.row}">
-				<span class="{style.label}">BookGenre: </span>
+				<span class="{style.space}"></span>
+				<g:Label styleName = "{style.label}"  ui:text="Enter title here" ui:field="userMessage"/>
+	</div>
+	<div class ="{style.row}">
+				<g:Label styleName = "{style.label}"  ui:text="Book genre"/>
 				<g:ListBox styleName = "{style.box}"  ui:field="entryBookGenre"/>
 	</div>
 		

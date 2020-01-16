@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dev.protobuf.DescriptorProtos.FieldDescriptorProto.Label;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -17,10 +18,13 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.ValueBox;
 import com.google.gwt.user.client.ui.Widget;
+
+import net.bytebuddy.implementation.attribute.AnnotationAppender.Target.OnType;
 
 public class AddBookDialog extends DialogBox {
 
@@ -39,16 +43,20 @@ public class AddBookDialog extends DialogBox {
 	TextBox entryBookTitle;
 	@UiField
 	ListBox entryBookGenre;
+	@UiField
+	Label userMessage;
 	
 	private final Consumer<BookDTO> callback;
 	private HashSet<Genre> genreSet = new HashSet<Genre>();
+	private static int preselectedGenre = 0;
 
 	public AddBookDialog(Consumer<BookDTO> callback,ServiceAsync service) {
 		this.callback = callback;
 		setWidget(uiBinder.createAndBindUi(this));
 		this.center();
 		genreSet.clear();
-		loadAvailableGenres(service);		
+		loadAvailableGenres(service);	
+		handleUserInput();
 	}
 
 
@@ -56,6 +64,9 @@ public class AddBookDialog extends DialogBox {
 		for (Genre genre : genreSet) {
 			entryBookGenre.addItem(genre.getGenreTitle());
 		}
+		
+		GWT.log(Integer.toString(preselectedGenre));
+		entryBookGenre.setSelectedIndex(preselectedGenre);
 		
 	}
 
@@ -65,7 +76,6 @@ public class AddBookDialog extends DialogBox {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("until here");
 				Window.alert(caught.getMessage());
 
 			}
@@ -85,35 +95,64 @@ public class AddBookDialog extends DialogBox {
 	@UiHandler("buttonAdd")
 	void onClick(ClickEvent e) {
 		
-		if (checkUserInput()){
+		if (checkInputNotEmpty()){
 		callback.accept(setUserInput());
+		entryBookTitle.setValue("");
+		preselectedGenre = entryBookGenre.getSelectedIndex();
+		GWT.log(Integer.toString(preselectedGenre));
+
 		}
 		
 	}
 	
 	private BookDTO setUserInput() {
 		BookDTO book = new BookDTO();
-		GWT.log(book.getBookGenre().getGenreTitle());
 		book.getBookGenre().setGenreTitle(entryBookGenre.getSelectedValue());
-		GWT.log(entryBookGenre.getSelectedValue());
-		GWT.log(book.getBookGenre().getGenreTitle());
-
 		book.setBookTitle(entryBookTitle.getValue());
 		return book;
 	}
 
-	private boolean checkUserInput() {
-		return true;
-		// TODO Auto-generated method stub
-		
-	}
 
 	@UiHandler("buttonClose")
 	void onClose(ClickEvent e) {
 		hide();
 	}
 	
+
+	public Boolean checkInputNotEmpty() {
+		if (!entryBookTitle.getValue().equals("") ){
+			userMessage.getElement().getStyle().setColor("green");
+			userMessage.setText("weiterer Titel?");
+			return true;
+		} else {
+			userMessage.setText("Eingabe fehlt");
+			userMessage.getElement().getStyle().setColor("red");
+			return false;
+		}
+	}
 	
-	
+	private void handleUserInput() {
+		entryBookTitle.addKeyPressHandler(new KeyPressHandler() {
+
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				int userInputLength = entryBookTitle.getText().length();
+
+				if (userInputLength >= 70) {
+					userMessage.setText("Zu viel Text! Es bleiben nur noch "+((Integer)(80-userInputLength)).toString() + " Zeichen!");
+					userMessage.getElement().getStyle().setColor("orange");
+
+				}
+				if (userInputLength == 80) {
+					userMessage.setText("Maximale Anzahl an Zeichen erreicht!");
+					userMessage.getElement().getStyle().setColor("red");
+					entryBookTitle.setText(entryBookTitle.getText().substring(0, entryBookTitle.getText().length() - 1));
+					entryBookTitle.setCursorPos(80);
+				}
+
+			}
+
+		});
+	}
 
 }
