@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
-
+import com.google.gwt.core.client.GWT;
 import com.trivadis.books.client.BookDTO;
 import com.trivadis.books.client.Genre;
 import com.trivadis.books.server.Entity.BookEntity;
@@ -35,10 +35,29 @@ public class BookManagementService {
 
 		BookEntity newBookEntity = new BookEntity();
 		BeanUtils.copyProperties(book, newBookEntity);
-		bookRepository.save(newBookEntity);		
+
+		if (genreExists(book.getBookGenre())) {
+			GenreEntity genreEntity = genreRepository.findOneByGenreTitleIgnoringCaseContains(book.getBookGenre().getGenreTitle());
+			newBookEntity.setGenreEntity(genreEntity);
+			bookRepository.save(newBookEntity);		
+			
+		} else {
+
+			GenreEntity newGenreEntity = new GenreEntity();
+			newGenreEntity.setGenreTitle(book.getBookGenre().getGenreTitle());
+			
+			genreRepository.save(newGenreEntity);
+			
+			newBookEntity.setGenreEntity(newGenreEntity);
+			bookRepository.save(newBookEntity);		
+		}
 
 	}
 	
+	private boolean genreExists(Genre genre) {
+		return getGenres().contains(genre);
+	}
+
 	public void addGenre(String genreTitle) {
 
 		GenreEntity newGenreEntity = new GenreEntity();
@@ -56,6 +75,8 @@ public class BookManagementService {
 			BookDTO book = new BookDTO();
 
 			BeanUtils.copyProperties(bookEntity, book);
+			
+			book.getBookGenre().setGenreTitle(bookEntity.getGenreEntity().getGenreTitle());
 
 			
 			bookDTOList.add(book);

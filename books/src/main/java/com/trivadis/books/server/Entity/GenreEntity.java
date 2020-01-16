@@ -13,7 +13,7 @@ public class GenreEntity {
 	@GeneratedValue
 	private Long id;
 	
-	@Column(unique =  true)
+	@Column(unique =  true, nullable = false)
 	private String genreTitle;
 	
 	public GenreEntity() {

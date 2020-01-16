@@ -1,6 +1,8 @@
 package com.trivadis.books.server.Repository;
 
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
@@ -13,6 +15,8 @@ import com.trivadis.books.server.Entity.GenreEntity;
 @Transactional(value = TxType.MANDATORY)
 public interface GenreRepository extends JpaRepository<GenreEntity, Long> {
 	
+	GenreEntity findOneByGenreTitleIgnoringCaseContains(String genreTitle);
+
 
 }
 

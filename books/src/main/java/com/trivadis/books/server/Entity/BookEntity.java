@@ -1,8 +1,14 @@
 package com.trivadis.books.server.Entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.CascadeType;
 
 import com.trivadis.books.client.Genre;
 
@@ -13,8 +19,12 @@ public class BookEntity {
 	@GeneratedValue
 	private Long id;
 	
+	@Column(nullable = false, columnDefinition = "VARCHAR(80)")
 	private String bookTitle;
-	private Genre bookGenre;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "genre_id")
+	private GenreEntity genreEntity;// = new GenreEntity();
 	
 	public BookEntity() {
 		// TODO Auto-generated constructor stub
@@ -22,7 +32,7 @@ public class BookEntity {
 	
 	public BookEntity(String bookTitle, Genre bookGenre) {
 		this.bookTitle = bookTitle;
-		this.bookGenre = bookGenre;
+		//this.bookGenre = bookGenre;
 	}
 	public Long getId() {
 		return id;
@@ -36,11 +46,11 @@ public class BookEntity {
 	public void setBookTitle(String booktTitle) {
 		this.bookTitle = booktTitle;
 	}
-	public Genre getBookGenre() {
-		return bookGenre;
+	public GenreEntity getGenreEntity() {
+		return genreEntity;
 	}
-	public void setBookGenre(String bookGenre) {
-		this.bookGenre.setGenreTitle(bookGenre);
+	public void setGenreEntity(GenreEntity genreEntity) {
+		this.genreEntity = genreEntity;
 	}
 	
 

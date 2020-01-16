@@ -17,9 +17,16 @@ import com.trivadis.books.client.BookDTO;
 			
 		@PostConstruct
 		private void generateData() {
-			service.addBook(new BookDTO());
-			service.addBook(new BookDTO());
-			service.addBook(new BookDTO());
+//			BookDTO newBook = new BookDTO();
+//			newBook.setBookTitle("The Dreaming Void");
+//			newBook.getBookGenre().setGenreTitle("SciFi");
+//			service.addBook(newBook);
+//			newBook.setBookTitle("The name of the wind");
+//			newBook.getBookGenre().setGenreTitle("Fantasy");
+//			service.addBook(newBook);
+//			newBook.setBookTitle("The long walk");
+//			newBook.getBookGenre().setGenreTitle("Novel");
+//			service.addBook(newBook);
 
 		}
 

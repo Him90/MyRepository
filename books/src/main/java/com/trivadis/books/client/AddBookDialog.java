@@ -29,7 +29,7 @@ public class AddBookDialog extends DialogBox {
 	interface AddBookDialogUiBinder extends UiBinder<Widget, AddBookDialog> {
 	}
 
-	private BookDTO book;
+	//private BookDTO book;
 
 	@UiField
 	Button buttonAdd;
@@ -81,13 +81,6 @@ public class AddBookDialog extends DialogBox {
 	}
 
 
-	public String getBookTitle() {
-		return entryBookTitle.getValue();
-	}
-	
-	public String getBookGenre() {
-		return entryBookGenre.getSelectedValue();
-	}
 
 	@UiHandler("buttonAdd")
 	void onClick(ClickEvent e) {
@@ -100,7 +93,11 @@ public class AddBookDialog extends DialogBox {
 	
 	private BookDTO setUserInput() {
 		BookDTO book = new BookDTO();
-		book.setBookGenre(entryBookGenre.getSelectedValue());
+		GWT.log(book.getBookGenre().getGenreTitle());
+		book.getBookGenre().setGenreTitle(entryBookGenre.getSelectedValue());
+		GWT.log(entryBookGenre.getSelectedValue());
+		GWT.log(book.getBookGenre().getGenreTitle());
+
 		book.setBookTitle(entryBookTitle.getValue());
 		return book;
 	}

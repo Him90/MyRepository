@@ -1,6 +1,7 @@
 package com.trivadis.books.client;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Genre implements Serializable{
 
@@ -15,6 +16,7 @@ public class Genre implements Serializable{
 	
 	public Genre() {
 		this.genreTitle = "none";
+
 	}
 	
 	public Genre(String genreTitle) {
@@ -34,10 +36,21 @@ public class Genre implements Serializable{
 		this.genreTitle = genreTitle;
 	}
 	
-
-	public void setGenre(String genreTitle) {
-		this.genreTitle = genreTitle;
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Genre) {
+			Genre genre = (Genre) obj;
+			return Objects.equals(genre.getGenreTitle(),this.getGenreTitle());
+		}
+		else {
+			return false;
+		}
 	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(genreTitle);
+	}
+
 
 
 }
