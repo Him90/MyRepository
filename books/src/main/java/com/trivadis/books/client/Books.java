@@ -57,8 +57,8 @@ public class Books implements EntryPoint {
 		Button buttonUpdate = new Button("Update Table");
 
 		FlowPanel filters = new FlowPanel();
-		InlineLabel filterGenreInfo = new InlineLabel("Select to filter a genre");
-		InlineLabel filterTextInfo = new InlineLabel("Select to filter bei booktitle");
+		InlineLabel filterGenreInfo = new InlineLabel("Select to filter by genre");
+		InlineLabel filterTextInfo = new InlineLabel("Select to filter by booktitle");
 
 		listGenreFiltersBox = new ListBox();
 		filterByBookTitle = new TextBox();
@@ -94,6 +94,7 @@ public class Books implements EntryPoint {
 
 		bookCellTable.updateFromServer(bookDataProvider, service);
 
+		bookCellTable.setStyleName("table");
 		content.setStyleName("content");
 		scrollTable.setStyleName("scrollTable");
 		scrollTable.add(bookCellTable);
@@ -105,6 +106,7 @@ public class Books implements EntryPoint {
 		buttonAdd.addClickHandler(e -> {
 
 			AddBookDialog dialogUIBinder = new AddBookDialog(book -> {
+				bookCellTable.setPageSize(bookDataProvider.getList().size()+1);
 
 				service.addBook(book, new AsyncCallback<Void>() {
 
@@ -117,10 +119,12 @@ public class Books implements EntryPoint {
 
 						bookCellTable.updateFromServer(bookDataProvider, service);
 						ColumnSortEvent.fire(bookCellTable, bookCellTable.getColumnSortList());
+
 					}
 				});
 
 			}, service);
+
 
 			listGenreFiltersBox.setSelectedIndex(0);
 
@@ -172,6 +176,7 @@ public class Books implements EntryPoint {
 				genreSet.clear();
 				genreSet.addAll(result);
 				initAvailableGenres();
+				GWT.log("load works");
 			}
 
 		});
@@ -183,6 +188,7 @@ public class Books implements EntryPoint {
 		for (Genre genre : genreSet) {
 			listGenreFiltersBox.addItem(genre.getGenreTitle());
 		}
+
 	}
 
 	public void showFilteredResult() {

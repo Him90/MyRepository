@@ -106,7 +106,7 @@ public class AddBookDialog extends DialogBox {
 			userMessage.setText("Maximal allowed input length! Keep it short!");
 			userMessage.getElement().getStyle().setColor("red");
 			entryBookTitle.setText(entryBookTitle.getText().substring(0, entryBookTitle.getText().length() - 1));
-			entryBookTitle.setCursorPos(80);
+			entryBookTitle.setCursorPos(79);
 		}
 	}
 

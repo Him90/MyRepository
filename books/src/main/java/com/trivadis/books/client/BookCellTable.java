@@ -37,6 +37,7 @@ public class BookCellTable extends CellTable<BookDTO> {
 		};
 
 		titleColumn.setSortable(true);
+		titleColumn.setCellStyleNames("table");
 		addColumn(titleColumn, "Title");
 
 		listHandler.setComparator(titleColumn, (a, b) -> (a.getBookTitle().compareTo(b.getBookTitle())));
@@ -52,6 +53,8 @@ public class BookCellTable extends CellTable<BookDTO> {
 		};
 
 		genreColumn.setSortable(true);
+		genreColumn.setCellStyleNames("table");
+
 		addColumn(genreColumn, "Genre");
 
 		listHandler.setComparator(genreColumn,
@@ -67,6 +70,7 @@ public class BookCellTable extends CellTable<BookDTO> {
 			}
 		};
 
+		deleteColumn.setCellStyleNames("table");
 		addColumn(deleteColumn);
 		deleteColumn.setFieldUpdater(new FieldUpdater<BookDTO, String>() {
 			@Override
