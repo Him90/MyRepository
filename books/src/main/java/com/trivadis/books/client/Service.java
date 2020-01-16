@@ -16,4 +16,6 @@ public interface Service extends RemoteService {
 	List<BookDTO> getBooks();
 
 	List<Genre> getGenres();
+
+	void deleteBook(BookDTO book);
 }

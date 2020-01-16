@@ -19,17 +19,14 @@ import com.trivadis.books.server.Repository.BookRepository;
 import com.trivadis.books.server.Repository.GenreRepository;
 
 @Component
-@Transactional(value = TxType.REQUIRED)  //Spring data
+@Transactional(value = TxType.REQUIRED) // Spring data
 public class BookManagementService {
-	
 
 	@Autowired
 	private BookRepository bookRepository;
-	
+
 	@Autowired
 	private GenreRepository genreRepository;
-	
-
 
 	public void addBook(BookDTO book) {
 
@@ -37,23 +34,24 @@ public class BookManagementService {
 		BeanUtils.copyProperties(book, newBookEntity);
 
 		if (genreExists(book.getBookGenre())) {
-			GenreEntity genreEntity = genreRepository.findOneByGenreTitleIgnoringCaseContains(book.getBookGenre().getGenreTitle());
+			GenreEntity genreEntity = genreRepository
+					.findOneByGenreTitleIgnoringCaseContains(book.getBookGenre().getGenreTitle());
 			newBookEntity.setGenreEntity(genreEntity);
-			bookRepository.save(newBookEntity);		
-			
+			bookRepository.save(newBookEntity);
+
 		} else {
 
 			GenreEntity newGenreEntity = new GenreEntity();
 			newGenreEntity.setGenreTitle(book.getBookGenre().getGenreTitle());
-			
+
 			genreRepository.save(newGenreEntity);
-			
+
 			newBookEntity.setGenreEntity(newGenreEntity);
-			bookRepository.save(newBookEntity);		
+			bookRepository.save(newBookEntity);
 		}
 
 	}
-	
+
 	private boolean genreExists(Genre genre) {
 		return getGenres().contains(genre);
 	}
@@ -62,7 +60,7 @@ public class BookManagementService {
 
 		GenreEntity newGenreEntity = new GenreEntity();
 		newGenreEntity.setGenreTitle(genreTitle);
-		genreRepository.save(newGenreEntity);		
+		genreRepository.save(newGenreEntity);
 	}
 
 	public List<BookDTO> getBooks() {
@@ -70,17 +68,15 @@ public class BookManagementService {
 
 		List<BookEntity> bookEntityList = bookRepository.findAll();
 
-
 		for (BookEntity bookEntity : bookEntityList) {
 			BookDTO book = new BookDTO();
 
 			BeanUtils.copyProperties(bookEntity, book);
-			
+
 			book.getBookGenre().setGenreTitle(bookEntity.getGenreEntity().getGenreTitle());
 
-			
 			bookDTOList.add(book);
-			
+
 		}
 
 		return bookDTOList;
@@ -91,21 +87,21 @@ public class BookManagementService {
 
 		List<GenreEntity> genreEntityList = genreRepository.findAll();
 
-
 		for (GenreEntity genreEntity : genreEntityList) {
 			Genre genre = new Genre();
-			
+
 			BeanUtils.copyProperties(genreEntity, genre);
 
-			
 			genreList.add(genre);
-			
+
 		}
 
 		return genreList;
 	}
 
-		
-	
+	public void deleteBook(BookDTO book) {
+
+		bookRepository.deleteById(book.getId());
+	}
 
 }

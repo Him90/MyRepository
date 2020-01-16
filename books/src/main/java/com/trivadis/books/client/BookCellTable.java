@@ -2,6 +2,8 @@ package com.trivadis.books.client;
 
 import java.util.List;
 
+import com.google.gwt.cell.client.ButtonCell;
+import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
@@ -23,6 +25,7 @@ public class BookCellTable extends CellTable<BookDTO>{
 
 		createTitleColumn();
 		createGenreColumn();
+		createDeleteColumn(bookDataProvider, service);
 }	
 	
 	private void createTitleColumn() {
@@ -53,6 +56,38 @@ public class BookCellTable extends CellTable<BookDTO>{
 		addColumn(genreColumn, "Genre");
 
 		listHandler.setComparator(genreColumn, (a, b) -> (a.getBookGenre().getGenreTitle().compareTo(b.getBookGenre().getGenreTitle())));
+	}
+	
+	private void createDeleteColumn(ListDataProvider<BookDTO> bookDataProvider, ServiceAsync service) {
+		Column<BookDTO, String> deleteColumn = new Column<BookDTO, String>(new ButtonCell()) {
+
+			@Override
+			public String getValue(BookDTO object) {
+				return "löschen";
+			}
+		};
+
+		addColumn(deleteColumn);
+		deleteColumn.setFieldUpdater(new FieldUpdater<BookDTO, String>() {
+			@Override
+			public void update(int index, BookDTO book, String value) {
+
+
+					service.deleteBook(book, new AsyncCallback<Void>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+						}
+
+						@Override
+						public void onSuccess(Void result) {
+							updateFromServer(bookDataProvider, service);
+
+						}
+					});
+
+			}
+		});
 	}
 
 	public void updateFromServer(ListDataProvider<BookDTO> bookDataProvider, ServiceAsync service) {

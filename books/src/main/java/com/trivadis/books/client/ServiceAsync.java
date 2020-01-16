@@ -13,4 +13,6 @@ public interface ServiceAsync {
 
 	void getGenres(AsyncCallback<List<Genre>> asyncCallback);
 
+	void deleteBook(BookDTO book, AsyncCallback<Void> asyncCallback);
+
 }

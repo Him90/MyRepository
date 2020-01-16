@@ -47,4 +47,10 @@ public class ServiceImpl extends RemoteServiceServlet implements Service {
 	public List<Genre> getGenres() {
 		return service.getGenres();
 	}
+
+	@Override
+	public void deleteBook(BookDTO book) {
+		service.deleteBook(book);
+		
+	}
 }
