@@ -81,7 +81,8 @@ public class BookCellTable extends CellTable<BookDTO>{
 
 						@Override
 						public void onSuccess(Void result) {
-							updateFromServer(bookDataProvider, service);
+							//updateFromServer(bookDataProvider, service);
+							bookDataProvider.getList().remove(index);
 
 						}
 					});
