@@ -5,9 +5,11 @@ import java.util.List;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
@@ -106,7 +108,6 @@ public class Books implements EntryPoint {
 		buttonAdd.addClickHandler(e -> {
 
 			AddBookDialog dialogUIBinder = new AddBookDialog(book -> {
-				bookCellTable.setPageSize(bookDataProvider.getList().size()+1);
 
 				service.addBook(book, new AsyncCallback<Void>() {
 
@@ -117,16 +118,17 @@ public class Books implements EntryPoint {
 					@Override
 					public void onSuccess(Void result) {
 
-						bookCellTable.updateFromServer(bookDataProvider, service);
+						//bookCellTable.updateFromServer(bookDataProvider, service);
 						ColumnSortEvent.fire(bookCellTable, bookCellTable.getColumnSortList());
+						//listGenreFiltersBox.setItemSelected(0, true);
+						KeyDownEvent.fireNativeEvent(Document.get().createKeyDownEvent(false, false, false, false, KeyCodes.KEY_ENTER), filterByBookTitle);
 
 					}
 				});
 
 			}, service);
 
-
-			listGenreFiltersBox.setSelectedIndex(0);
+			ColumnSortEvent.fire(bookCellTable, bookCellTable.getColumnSortList());
 
 			dialogUIBinder.center();
 			dialogUIBinder.show();
@@ -136,8 +138,8 @@ public class Books implements EntryPoint {
 		buttonUpdate.addClickHandler(e -> {
 
 			bookCellTable.updateFromServer(bookDataProvider, service);
-			listGenreFiltersBox.setSelectedIndex(0);
-
+			listGenreFiltersBox.setItemSelected(0, true);
+			
 		});
 
 		listGenreFiltersBox.addChangeHandler(new ChangeHandler() {
@@ -176,7 +178,6 @@ public class Books implements EntryPoint {
 				genreSet.clear();
 				genreSet.addAll(result);
 				initAvailableGenres();
-				GWT.log("load works");
 			}
 
 		});
@@ -192,6 +193,8 @@ public class Books implements EntryPoint {
 	}
 
 	public void showFilteredResult() {
+		bookDataProvider.getList().clear();
+
 		service.getBooks(new AsyncCallback<List<BookDTO>>() {
 
 			@Override
@@ -202,7 +205,7 @@ public class Books implements EntryPoint {
 
 			@Override
 			public void onSuccess(List<BookDTO> result) {
-				bookDataProvider.getList().clear();
+
 
 				for (BookDTO book : result) {
 					if ((book.getBookGenre().getGenreTitle() == listGenreFiltersBox.getSelectedValue())
@@ -213,14 +216,17 @@ public class Books implements EntryPoint {
 					}
 					if (listGenreFiltersBox.getSelectedValue() == "none"
 							&& (book.getBookTitle().contains(filterByBookTitle.getValue()))) {
-						// bookDataProvider.getList().clear();
 						bookDataProvider.getList().add(book);
 
-						// bookDataProvider.getList().addAll(result);
 
 					}
 
 				}
+				GWT.log(filterByBookTitle.getValue());
+				ColumnSortEvent.fire(bookCellTable, bookCellTable.getColumnSortList());
+
+				bookCellTable.setPageSize(bookDataProvider.getList().size()+1);
+
 			}
 
 		});

@@ -107,6 +107,8 @@ public class BookCellTable extends CellTable<BookDTO> {
 			public void onSuccess(List<BookDTO> result) {
 				bookDataProvider.getList().clear();
 				bookDataProvider.getList().addAll(result);
+				setPageSize(bookDataProvider.getList().size()+1);
+
 			}
 
 		});
