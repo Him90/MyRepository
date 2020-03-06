@@ -28,7 +28,7 @@ dependencies {
 
 implementation 'org.hibernate:hibernate-core:5.4.10.Final'  //hibernate
 implementation 'org.springframework.data:spring-data-jpa:2.2.3.RELEASE' //spring data jpa
-
+testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.5.2' //testcode
 implementation 'org.postgresql:postgresql:42.2.9' //postgres
 runtime 'com.google.gwt:gwt-servlet:2.8.2' //gwt, nicht zur compilezeit verfügbar
 
@@ -41,4 +41,8 @@ gwt {
     eclipse {
         addGwtContainer = false
     }
+}
+
+test {
+    useJUnitPlatform()
 }
