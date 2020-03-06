@@ -14,6 +14,20 @@ buildscript {  //lambdas
 
 apply plugin: 'gwt'
 
+plugins {
+    id 'pmd'
+}
+
+
+
+plugins {
+    id 'checkstyle'
+}
+
+plugins {
+  id "com.github.spotbugs" version "4.0.1"
+}
+
 sourceCompatibility = '1.8'  //ab java9 -> '9' nicht '1.9'
 
 
@@ -31,6 +45,7 @@ implementation 'org.springframework.data:spring-data-jpa:2.2.3.RELEASE' //spring
 testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.5.2' //testcode
 implementation 'org.postgresql:postgresql:42.2.9' //postgres
 runtime 'com.google.gwt:gwt-servlet:2.8.2' //gwt, nicht zur compilezeit verfügbar
+
 
 }
 
