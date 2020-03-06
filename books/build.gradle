@@ -14,18 +14,34 @@ buildscript {  //lambdas
 
 apply plugin: 'gwt'
 
-plugins {
-    id 'pmd'
+apply plugin: 'pmd'
+
+apply plugin: 'findbugs'
+findbugs {
+    ignoreFailures = false
+    toolVersion = "3.0.1"
+    sourceSets=[sourceSets.main]
+    excludeFilter = file("config/findbugs/excludeFilter.xml")
+    reportsDir = file("$project.buildDir/reports/findbugs")
+    effort = "max"
+}
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
 }
 
-
-
-plugins {
-    id 'checkstyle'
+apply plugin: 'checkstyle'
+checkstyle {
+    toolVersion '7.8.1'
+    configFile file("config/checkstyle/checkstyle.xml")
 }
-
-plugins {
-  id "com.github.spotbugs" version "4.0.1"
+checkstyleMain {
+    source ='src/main/java'
+}
+checkstyleTest {
+    source ='src/test/java'
 }
 
 sourceCompatibility = '1.8'  //ab java9 -> '9' nicht '1.9'
