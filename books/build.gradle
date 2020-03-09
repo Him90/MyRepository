@@ -52,6 +52,21 @@ apply plugin:'pmd'
     ruleSetFiles = files('config/pmd/pmd.xml')
 }  
 
+
+
+apply plugin: 'jacoco' 
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        xml.destination file("${buildDir}/reports/jacoco/jacoco.xml")
+    }
+}
+check.dependsOn jacocoTestReport
+
+
+
 sourceCompatibility = '1.8'  //ab java9 -> '9' nicht '1.9'
 
 
