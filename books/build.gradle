@@ -16,7 +16,7 @@ apply plugin: 'gwt'
 
 apply plugin: 'checkstyle'
 checkstyle {
-    toolVersion '7.8.1'
+    //toolVersion '7.8.1'
     ignoreFailures = true
     
     configFile file("config/checkstyle/checkstyle.xml")
@@ -31,9 +31,9 @@ checkstyleTest {
 apply plugin: 'findbugs'
 findbugs {
     ignoreFailures = true
-    toolVersion = "3.0.1"
-    sourceSets=[sourceSets.main]
-    excludeFilter = file("config/findbugs/findbugs.xml")
+    //toolVersion = "3.0.1"
+    //sourceSets=[sourceSets.main]
+    //excludeFilter = file("config/findbugs/findbugs.xml")
     reportsDir = file("$project.buildDir/reports/findbugs")
     effort = "max"
 }
@@ -51,7 +51,6 @@ apply plugin:'pmd'
     ignoreFailures =true
     ruleSetFiles = files('config/pmd/pmd.xml')
 }  
-
 
 
 apply plugin: 'jacoco' 
