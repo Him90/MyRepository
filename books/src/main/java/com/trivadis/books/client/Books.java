@@ -118,10 +118,10 @@ public class Books implements EntryPoint {
 					@Override
 					public void onSuccess(Void result) {
 
-						//bookCellTable.updateFromServer(bookDataProvider, service);
-						ColumnSortEvent.fire(bookCellTable, bookCellTable.getColumnSortList());
-						//listGenreFiltersBox.setItemSelected(0, true);
-						KeyDownEvent.fireNativeEvent(Document.get().createKeyDownEvent(false, false, false, false, KeyCodes.KEY_ENTER), filterByBookTitle);
+//bookCellTable.updateFromServer(bookDataProvider, service);
+ColumnSortEvent.fire(bookCellTable, bookCellTable.getColumnSortList());
+//listGenreFiltersBox.setItemSelected(0, true);
+KeyDownEvent.fireNativeEvent(Document.get().createKeyDownEvent(false, false, false, false, KeyCodes.KEY_ENTER), filterByBookTitle);
 
 					}
 				});
@@ -208,13 +208,13 @@ public class Books implements EntryPoint {
 
 
 				for (BookDTO book : result) {
-					if ((book.getBookGenre().getGenreTitle() == listGenreFiltersBox.getSelectedValue())
+					if ((book.getBookGenre().getGenreTitle().equals(listGenreFiltersBox.getSelectedValue()))
 							&& (book.getBookTitle().contains(filterByBookTitle.getValue()))) {
 
 						bookDataProvider.getList().add(book);
 
 					}
-					if (listGenreFiltersBox.getSelectedValue() == "none"
+					if (listGenreFiltersBox.getSelectedValue().equals("none")
 							&& (book.getBookTitle().contains(filterByBookTitle.getValue()))) {
 						bookDataProvider.getList().add(book);
 
