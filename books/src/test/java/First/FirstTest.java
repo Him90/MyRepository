@@ -1,8 +1,10 @@
 package First;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.junit.jupiter.api.Test;
+
+import com.trivadis.books.client.BookDTO;
 
 public class FirstTest {
 	
@@ -10,7 +12,16 @@ public class FirstTest {
 	public void addTest() {
 		int one = 1;
 		int test = 1;
-		assertTrue(one == test);
+		assertSame(one,test);
+	}
+	
+	@Test
+	public void addTitle() {
+		BookDTO bookDTO = new BookDTO();
+		bookDTO.setBookTitle("TestTitle");
+		String testTitleString = bookDTO.getBookTitle();
+		
+		assertSame(testTitleString, "TestTitle");
 	}
 
 }
