@@ -16,6 +16,8 @@ public class GenreGenerator {
 		service.addGenre("SciFi");
 		service.addGenre("Fantasy");
 		service.addGenre("Horror");
+		service.addGenre("Comic");
+
 
 	}
 
