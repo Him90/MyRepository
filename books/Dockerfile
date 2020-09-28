@@ -1,3 +1,3 @@
-FROM jetty
+FROM tomcat
 
-ADD ./build/libs/*.war /var/lib/jetty/webapps/ROOT.war
+ADD ./build/libs/books.war /usr/local/tomcat/webapps/books.war
